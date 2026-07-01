@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Variance Report | FreshAudit{% endblock %}
+{% block content %}
+<h1>Variance Report</h1>
+<p class="muted">Admin-only report. Snapshot quantity is intentionally hidden from auditor screens.</p>
+
+<section class="panel">
+    <div class="panel-header">
+        <div>
+            <h2>{{ task.audit_task_id }}</h2>
+            <p class="muted">Warehouse: {{ task.warehouse.warehouse_code }} | Target: {{ task.target_type }} = {{ task.target_value }} | Status: {{ task.status }}</p>
+        </div>
+        <a class="primary-btn" href="/admin/audit-tasks/{{ task.id }}/variance/download">Download CSV</a>
+    </div>
+
+    <div class="formula-box">
+        Shrinkage Rate = (Snapshot Quantity - Audited Quantity) / Snapshot Quantity * 100
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Audit Task ID</th>
+                    <th>Warehouse ID</th>
+                    <th>SKU</th>
+                    <th>Item</th>
+                    <th>Shelf Location</th>
+                    <th>Snapshot Qty</th>
+                    <th>Audited Qty</th>
+                    <th>Variance</th>
+                    <th>Shrinkage Rate</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row.Audit_Task_ID }}</td>
+                        <td>{{ row.Warehouse_ID }}</td>
+                        <td>{{ row.Item_SKU }}</td>
+                        <td>{{ row.Item_Name }}</td>
+                        <td>{{ row.Shelf_Location }}</td>
+                        <td>{{ row.Snapshot_Quantity }}</td>
+                        <td>{{ row.Audited_Quantity if row.Audited_Quantity is not none else '-' }}</td>
+                        <td>{{ row.Variance if row.Variance is not none else '-' }}</td>
+                        <td>
+                            {% if row.Shrinkage_Rate is not none %}
+                                {{ row.Shrinkage_Rate }}%
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                        <td><span class="status-pill">{{ row.Count_Status }}</span></td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="10">No report rows found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

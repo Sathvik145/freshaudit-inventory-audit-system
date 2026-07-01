@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Login | FreshAudit{% endblock %}
+{% block content %}
+<div class="login-card">
+    <h1>FreshAudit Login</h1>
+    <p class="muted">Inventory Quality & Cycle Counting System</p>
+
+    {% if error %}
+        <div class="alert error">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/login" class="form-card">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="admin@freshaudit.com" required>
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="admin123" required>
+
+        <button type="submit" class="primary-btn full-width">Login</button>
+    </form>
+
+    <div class="demo-box">
+        <h3>Demo Credentials</h3>
+        <p><strong>Admin:</strong> admin@freshaudit.com / admin123</p>
+        <p><strong>Auditor:</strong> auditor1@freshaudit.com / auditor123</p>
+    </div>
+</div>
+{% endblock %}

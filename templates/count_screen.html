@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Blind Count | FreshAudit{% endblock %}
+{% block content %}
+<h1>Blind Count Screen</h1>
+<p class="muted">Audit Task: {{ task.audit_task_id }} | Warehouse: {{ task.warehouse.warehouse_code }}</p>
+
+<section class="panel warning-panel">
+    <h2>Blind Count Rule</h2>
+    <p>The auditor does not see snapshot quantity, expected quantity, variance, or shrinkage during counting.</p>
+</section>
+
+<section class="panel">
+    <h2>Count Items</h2>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Shelf Location</th>
+                    <th>SKU</th>
+                    <th>Item</th>
+                    <th>Count Action</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in count_rows %}
+                    <tr>
+                        <td class="mono">{{ row.shelf_location }}</td>
+                        <td class="mono">{{ row.item_sku }}</td>
+                        <td>{{ row.item_name }}</td>
+                        <td>
+                            {% if row.is_submitted %}
+                                <div class="locked-box">
+                                    Submitted quantity: <strong>{{ row.audited_quantity }}</strong><br>
+                                    This count is locked and read-only.
+                                </div>
+                            {% else %}
+                                <form method="post" action="/auditor/tasks/{{ task.id }}/submit-count" class="count-form" onsubmit="return confirm('Confirm final count submission? This cannot be edited from handheld device.');">
+                                    <input type="hidden" name="shelf_location" value="{{ row.shelf_location }}">
+                                    <input type="hidden" name="item_sku" value="{{ row.item_sku }}">
+
+                                    <label>Scan Location Barcode</label>
+                                    <input type="text" name="location_scan" placeholder="{{ row.shelf_location }}" required>
+
+                                    <label>Scan SKU</label>
+                                    <input type="text" name="sku_scan" placeholder="{{ row.item_sku }}" required>
+
+                                    <label>Physical Quantity Counted</label>
+                                    <input class="qty-input" type="number" name="audited_quantity" min="0" inputmode="numeric" required>
+
+                                    <button type="submit" class="primary-btn full-width">Confirm & Submit Count</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if row.is_submitted %}
+                                <span class="status-pill completed">LOCKED</span>
+                            {% else %}
+                                <span class="status-pill pending">PENDING</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5">No count lines available for this task.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Create Audit Task | FreshAudit{% endblock %}
+{% block content %}
+<h1>Create Audit Task</h1>
+<p class="muted">When this task is created, the system freezes matching inventory rows into an audit snapshot.</p>
+
+<section class="panel narrow-panel">
+    <form method="post" action="/admin/create-audit" class="form-card">
+        <label>Warehouse</label>
+        <select name="warehouse_id" required>
+            {% for warehouse in warehouses %}
+                <option value="{{ warehouse.id }}">{{ warehouse.warehouse_code }} - {{ warehouse.warehouse_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Target Type</label>
+        <select name="target_type" required>
+            <option value="LOCATION">LOCATION</option>
+            <option value="CATEGORY">CATEGORY</option>
+            <option value="SKU">SKU</option>
+        </select>
+
+        <label>Target Value</label>
+        <input type="text" name="target_value" placeholder="Example: Aisle_B or Vegetables or SKU_TOMATO_001" required>
+
+        <button type="submit" class="primary-btn full-width">Create Audit Task & Freeze Snapshot</button>
+    </form>
+
+    <div class="hint-box">
+        <h3>Try these demo values</h3>
+        <p><strong>LOCATION:</strong> Aisle_B</p>
+        <p><strong>CATEGORY:</strong> Fruits</p>
+        <p><strong>SKU:</strong> SKU_TOMATO_001</p>
+    </div>
+</section>
+{% endblock %}

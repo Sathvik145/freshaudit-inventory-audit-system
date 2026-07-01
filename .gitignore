@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.local
+freshaudit.db
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Auditor Dashboard | FreshAudit{% endblock %}
+{% block content %}
+<h1>Hub Auditor Dashboard</h1>
+<p class="muted">You can only view audit tasks for warehouses assigned to you.</p>
+
+<section class="panel">
+    <h2>Assigned Warehouses</h2>
+    <div class="badge-row">
+        {% for warehouse in warehouses %}
+            <span class="warehouse-badge">{{ warehouse.warehouse_code }} - {{ warehouse.warehouse_name }}</span>
+        {% else %}
+            <span>No warehouses assigned. Contact Central Admin.</span>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Assigned Audit Tasks</h2>
+    <p class="muted">Blind count rule: expected system quantity is not visible on auditor screens.</p>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Task ID</th>
+                    <th>Warehouse</th>
+                    <th>Target</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.audit_task_id }}</td>
+                        <td>{{ task.warehouse.warehouse_code }}</td>
+                        <td>{{ task.target_type }}: {{ task.target_value }}</td>
+                        <td><span class="status-pill">{{ task.status }}</span></td>
+                        <td>{{ task.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td><a class="primary-btn small-btn" href="/auditor/tasks/{{ task.id }}/count">Start / Continue Count</a></td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6">No assigned audit tasks yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

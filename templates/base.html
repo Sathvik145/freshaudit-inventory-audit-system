@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FreshAudit{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand">FreshAudit</div>
+    <nav>
+        {% if user %}
+            {% if user.role == 'CENTRAL_ADMIN' %}
+                <a href="/admin/dashboard">Admin Dashboard</a>
+                <a href="/admin/create-audit">Create Audit</a>
+            {% else %}
+                <a href="/auditor/dashboard">Auditor Dashboard</a>
+            {% endif %}
+            <span class="user-pill">{{ user.name }} | {{ user.role }}</span>
+            <a href="/logout">Logout</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main class="container">
+    {% if success %}
+        <div class="alert success">{{ success }}</div>
+    {% endif %}
+    {% if error %}
+        <div class="alert error">{{ error }}</div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
