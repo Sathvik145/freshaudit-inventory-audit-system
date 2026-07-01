@@ -81,18 +81,18 @@ http://127.0.0.1:8000
 ## Recommended Demo Flow
 
 1. Login as Admin. ![Login Page](screenshots/Login-page.png)
-2. Go to Create Audit Task.
-3. Select warehouse `WH_BLR_001`.
-4. Select target type `LOCATION`.
+2. Go to Create Audit Task. ![Admin Dashboard](screenshots/Admin-Dashboard.png)
+3. Select warehouse `WH_BLR_001`. 
+4. Select target type `LOCATION`.![Create audit task](screenshots/Create-Audit-task.png)
 5. Enter target value `Aisle_B`.
-6. Create audit task.
+6. Create audit task. ![Inventory snap shot](screenshots/Inventory-Snapshot.png)
 7. Logout.
-8. Login as Auditor using `auditor1@freshaudit.com`.
-9. Open the assigned audit task.
-10. For each row, copy the shown shelf location into location scan, copy shown SKU into SKU scan, and enter physical quantity.
+8. Login as Auditor using `auditor1@freshaudit.com`. ![Auditor Login page](screenshots/Auditor-Login-page.png)
+9. Open the assigned audit task. ![Auditor DashBoard](screenshots/Auditor-dashboard.png)
+10. For each row, copy the shown shelf location into location scan, copy shown SKU into SKU scan, and enter physical quantity. ![Auditor Blind Count Screen](screenshots/Auditor-blind-Count-Screen.png)
 11. Submit count.
 12. Logout and login as Admin.
-13. Open variance report and download CSV.
+13. Open variance report and download CSV. ![Variance Report](screenshots/Variance-Report.png)
 
 ## Key Design Decisions
 
