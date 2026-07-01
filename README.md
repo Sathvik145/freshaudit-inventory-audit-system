@@ -80,7 +80,7 @@ http://127.0.0.1:8000
 
 ## Recommended Demo Flow
 
-1. Login as Admin.
+1. Login as Admin. ![Login Page](screenshots/Login-page.png)
 2. Go to Create Audit Task.
 3. Select warehouse `WH_BLR_001`.
 4. Select target type `LOCATION`.
