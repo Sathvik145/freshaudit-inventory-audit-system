@@ -4,7 +4,7 @@
 
 FreshAudit is an internal inventory quality and cycle-counting application for fulfillment hubs handling fresh produce. The system allows Central Admins to schedule blind audits and Hub Auditors to physically scan, count, and submit stock quantities without seeing expected stock levels.
 
-The main business goal is to reduce stock inaccuracy caused by spoilage, shrinkage, handling damage, and manual counting bias.
+The main business goal of this application is to reduce stock inaccuracy caused by spoilage, shrinkage, handling damage, and manual counting bias.
 
 ## Proposed MVP
 
@@ -26,7 +26,7 @@ The MVP uses a modular monolithic architecture:
 - Session-based authentication
 - CSV report generation
 
-This approach was selected for quick development and easy demonstration. For production, the same logical architecture can be deployed with PostgreSQL, Docker, Kubernetes, CI/CD, and observability tools.
+This tech stack/approach was selected for quick development and easy demonstration. For production, the same logical architecture can be deployed with PostgreSQL, Docker, Kubernetes, CI/CD, and observability tools.
 
 ## Core Workflow
 
@@ -57,7 +57,7 @@ This approach was selected for quick development and easy demonstration. For pro
 
 ## Key Design Decision: Frozen Snapshot
 
-The frozen snapshot is the most important part of the design. When an audit task is activated, current inventory is copied into `audit_snapshot_lines`. The variance report compares physical count against this fixed snapshot, not against live inventory that may change later.
+The frozen snapshot is the most important part of the design. When an audit task is activated by the admin, current inventory is copied into `audit_snapshot_lines`. The variance report compares physical count against this fixed snapshot of the inventory, not against live inventory that may change later.
 
 This prevents inaccurate variance reporting caused by inventory movement after audit creation.
 
@@ -114,7 +114,7 @@ Shrinkage rate formula:
 
 ## Reliability and Observability Roadmap
 
-For production, the system should add:
+For production, we can add:
 
 - `/health` endpoint for uptime checks
 - Prometheus metrics
