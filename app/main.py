@@ -13,7 +13,7 @@ from app.seed import seed_data
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Create DB tables and insert demo data when the app starts.
+    # Creates DB tables and insert demo data when the app starts.
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
